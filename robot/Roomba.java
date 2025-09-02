@@ -4,6 +4,7 @@ import kareltherobot.*;
 
 public class Roomba implements Directions {
 
+	Robot rob = new Robot(10,10,South,9);
 	// Main method to make this self-contained
 	public static void main(String[] args) {
 		// LEAVE THIS ALONE!!!!!!
