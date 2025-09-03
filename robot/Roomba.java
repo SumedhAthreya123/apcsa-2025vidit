@@ -11,13 +11,14 @@ public class Roomba implements Directions {
 		String worldName = "robot/basicRoom.wld";
 
 		Roomba cleaner = new Roomba();
+		World.setDelay(1);
 		int totalBeepers = cleaner.cleanRoom(worldName, 7, 6);
 		System.out.println("Roomba cleaned up a total of " + totalBeepers + " beepers.");
 
 	}
 
 	// declared here so it is visible in all the methods!
-	private Robot roomba;
+	
 
 	// You will need to add many variables!!
 
@@ -29,17 +30,102 @@ public class Roomba implements Directions {
 
 		World.readWorld(worldName);
 		World.setVisible(true);
+		
 
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.turnLeft();
 
-		/** This section will have all the logic that takes the Robot to every location
-		 * and cleans up all piles of beepers. Think about ways you can break this
-		 * large, complex task into smaller, easier to solve problems.
-		 */
+		rob.move();
 
-		// the line below causes a null pointer exception
-		// what is that and why are we getting it?
-		roomba.move();
+		while (rob.nextToABeeper() == true){
 
+			rob.pickBeeper();
+		}
+
+		rob.move();
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.move();
+		while (rob.nextToABeeper() == true){
+
+			rob.pickBeeper();
+		}
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.move();
+		rob.move();
+		while (rob.nextToABeeper() == true){
+
+			rob.pickBeeper();
+		}
+		rob.move();
+		rob.move();
+		rob.move();
+		while (rob.nextToABeeper() == true){
+
+			rob.pickBeeper();
+		}
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.move();
+		rob.move();
+		rob.turnLeft();	
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.move();
+		rob.move();
+		while (rob.nextToABeeper() == true){
+
+			rob.pickBeeper();
+		}
+		rob.move();
+		rob.move();
+		rob.move();
+		rob.move();
+		while (rob.nextToABeeper() == true){
+
+			rob.pickBeeper();
+		}
+		rob.turnLeft();
+		rob.move();
+		rob.turnLeft();
+		rob.move();
+		rob.move();
+		rob.move();
+		rob.move();
+		while (rob.nextToABeeper() == true){
+
+			rob.pickBeeper();
+		}
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.move();
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.turnLeft();
+		rob.move();
+		rob.move();
+		while (rob.nextToABeeper() == true){
+
+			rob.pickBeeper();
+		}
+		rob.move();
+		while (rob.nextToABeeper() == true){
+
+			rob.pickBeeper();
+		}
+		rob.move();
+
+		
+		
+		
+
+	
 
 		int totalBeepers = 0; // Need to move this somewhere else.
         // This method should return the total number of beepers cleaned up.
