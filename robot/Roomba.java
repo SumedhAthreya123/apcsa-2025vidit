@@ -4,7 +4,7 @@ import kareltherobot.*;
 
 public class Roomba implements Directions {
 
-	Robot rob = new Robot(10,10,South,9);
+	Robot rob = new Robot(7,6,East,9);
 	// Main method to make this self-contained
 	public static void main(String[] args) {
 		// LEAVE THIS ALONE!!!!!!
@@ -32,7 +32,7 @@ public class Roomba implements Directions {
 		World.setVisible(true);
 		
 
-		rob.turnLeft();
+/* 		rob.turnLeft();
 		rob.turnLeft();
 		rob.turnLeft();
 
@@ -120,9 +120,41 @@ public class Roomba implements Directions {
 			rob.pickBeeper();
 		}
 		rob.move();
+*/
+/* 	if (rob.nextToABeeper()) {
+			rob.pickBeeper();
+		}
+		else {
+			rob.move();
+	}
+*/
 
-		
-		
+int drac = 0;
+boolean y = true;
+while (y=true) {
+	while (rob.nextToABeeper() == true) {
+		rob.pickBeeper();
+	}
+	rob.move();
+	if (rob.frontIsClear()==false) {
+		if (drac % 2 == 0) {
+			drac += 1;
+			rob.turnLeft();
+			rob.move();
+			rob.turnLeft();
+		}
+		else {
+			drac += 1;
+			rob.turnLeft();
+			rob.turnLeft();
+			rob.turnLeft();
+			rob.move();
+			rob.turnLeft();
+			rob.turnLeft();
+			rob.turnLeft();
+		}
+	}
+}	
 		
 
 	
