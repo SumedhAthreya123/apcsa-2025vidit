@@ -4,18 +4,123 @@ import kareltherobot.*;
 
 public class Roomba implements Directions {
 
-	Robot rob = new Robot(7,6,East,9);
+	
 	// Main method to make this self-contained
 	public static void main(String[] args) {
-		// LEAVE THIS ALONE!!!!!!
-		String worldName = "robot/basicRoom.wld";
+		World.setDelay(0);
+		World.readWorld("robot/finalTestWorld2024.wld");
+		World.setVisible(true);
+		Robot rob = new Robot(26,101,East,9);
 
-		Roomba cleaner = new Roomba();
-		World.setDelay(1);
-		int totalBeepers = cleaner.cleanRoom(worldName, 7, 6);
-		System.out.println("Roomba cleaned up a total of " + totalBeepers + " beepers.");
+		
+		
 
+		int numBeeper = 0;
+		int numPile = 0;
+		int area = 1;
+		int numBeepersInPile = 0;
+		int numLargestPile = 0;
+		int x=0;
+		int y=0;
+		
+		for (int i = 1; i <= 100;) {
+			while (rob.frontIsClear()) {
+				if (rob.nextToABeeper()) {
+					numPile++;
+				}
+				while (rob.nextToABeeper()) {
+					rob.pickBeeper();
+					numBeeper++;
+					numBeepersInPile++;
+				}
+				if (numBeepersInPile > numLargestPile) {
+					numLargestPile = numBeepersInPile;
+					x = rob.avenue();
+					y = rob.street();
+				}
+
+				numBeepersInPile = 0;
+				rob.move();
+				area++;
+			}
+
+			if (rob.facingEast()) {
+				rob.turnLeft();
+				if (rob.nextToABeeper()) {
+					numPile++;
+				}
+				while (rob.nextToABeeper()) {
+					rob.pickBeeper();
+					numBeeper++;
+					numBeepersInPile++;
+				
+				}
+				if (numBeepersInPile > numLargestPile) {
+					numLargestPile = numBeepersInPile;
+					x = rob.avenue();
+					y = rob.street();
+				}
+				numBeepersInPile = 0;
+
+				if (rob.frontIsClear()) {
+					rob.move();
+					area++;
+					rob.turnLeft();
+
+				} else {
+					i = 101;
+				}
+			} else if (rob.facingWest()) {
+				rob.turnLeft();
+				rob.turnLeft();
+				rob.turnLeft();
+
+				if (rob.nextToABeeper()) {
+					numPile++;
+				}
+				while (rob.nextToABeeper()) {
+					rob.pickBeeper();
+					numBeeper++;
+					numBeepersInPile++;
+				}
+				if (numBeepersInPile > numLargestPile) {
+					numLargestPile = numBeepersInPile;
+					x = rob.avenue();
+					y = rob.street();
+				}
+				numBeepersInPile = 0;
+
+				if (rob.frontIsClear()) {
+					rob.move();
+					area++;
+					rob.turnLeft();
+					rob.turnLeft();
+					rob.turnLeft();
+				} else {
+					i = 101;
+				}
+
+			}
+		}
+		System.out.println("The area is " + area);
+		System.out.println("The total number of piles are " + numPile);
+		System.out.println("The total number of beepers are " + numBeeper);
+		System.out.println("The largest pile is " + numLargestPile);
+		System.out.println("The dirty percentage is " + ((double)numPile/area));
+		System.out.println("The coordinates are: The x coordinate is "  + x + " and the y coordinate is " + y);
+		System.out.println("The average amount of beepers are " + ((double)numBeeper/numPile));
+		System.out.println("The robot cleaned up a total of " + numBeeper + " beepers.");
+
+		
+		 // Need to move this somewhere else.
+        // This method should return the total number of beepers cleaned up.
+		
 	}
+}
+
+
+
+	
 
 	// declared here so it is visible in all the methods!
 	
@@ -23,144 +128,18 @@ public class Roomba implements Directions {
 	// You will need to add many variables!!
 
 
-	public int cleanRoom(String worldName, int startX, int startY) {
+	
 
 		// A new Robot should be constructed and assigned to the global (instance) variable named roomba that is declared above.
         // Make sure it starts at startX and startY location.
 
-		World.readWorld(worldName);
-		World.setVisible(true);
+		
 		
 
-/* 		rob.turnLeft();
-		rob.turnLeft();
-		rob.turnLeft();
-
-		rob.move();
-
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-
-		rob.move();
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.move();
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.move();
-		rob.move();
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-		rob.move();
-		rob.move();
-		rob.move();
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.move();
-		rob.move();
-		rob.turnLeft();	
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.move();
-		rob.move();
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-		rob.move();
-		rob.move();
-		rob.move();
-		rob.move();
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-		rob.turnLeft();
-		rob.move();
-		rob.turnLeft();
-		rob.move();
-		rob.move();
-		rob.move();
-		rob.move();
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.move();
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.turnLeft();
-		rob.move();
-		rob.move();
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-		rob.move();
-		while (rob.nextToABeeper() == true){
-
-			rob.pickBeeper();
-		}
-		rob.move();
-*/
-/* 	if (rob.nextToABeeper()) {
-			rob.pickBeeper();
-		}
-		else {
-			rob.move();
-	}
-*/
-
-int drac = 0;
-boolean y = true;
-while (y=true) {
-	while (rob.nextToABeeper() == true) {
-		rob.pickBeeper();
-	}
-	rob.move();
-	if (rob.frontIsClear()==false) {
-		if (drac % 2 == 0) {
-			drac += 1;
-			rob.turnLeft();
-			rob.move();
-			rob.turnLeft();
-		}
-		else {
-			drac += 1;
-			rob.turnLeft();
-			rob.turnLeft();
-			rob.turnLeft();
-			rob.move();
-			rob.turnLeft();
-			rob.turnLeft();
-			rob.turnLeft();
-		}
-	}
-}	
 		
 
+		
+		 // Need to move this somewhere else.
+        // This method should return the total number of beepers cleaned up.
 	
 
-		int totalBeepers = 0; // Need to move this somewhere else.
-        // This method should return the total number of beepers cleaned up.
-		return totalBeepers;
-	}
-}
