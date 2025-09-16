@@ -55,13 +55,14 @@ public class Roomba implements Directions {
 					numBeepersInPile++;
 				
 				}
+				// have to create a new avenue and street for the x and y coordinates
 				if (numBeepersInPile > numLargestPile) {
 					numLargestPile = numBeepersInPile;
 					x = rob.avenue();
 					y = rob.street();
 				}
 				numBeepersInPile = 0;
-
+// have to keep checking the space and adding to the area
 				if (rob.frontIsClear()) {
 					rob.move();
 					area++;
@@ -102,6 +103,7 @@ public class Roomba implements Directions {
 
 			}
 		}
+		// final steps are the print statements
 		System.out.println("The area is " + area);
 		System.out.println("The total number of piles are " + numPile);
 		System.out.println("The total number of beepers are " + numBeeper);
@@ -119,7 +121,7 @@ public class Roomba implements Directions {
 }
 
 
-
+// had to repeat a bunch of code to check all of the beepers
 	
 
 	// declared here so it is visible in all the methods!
