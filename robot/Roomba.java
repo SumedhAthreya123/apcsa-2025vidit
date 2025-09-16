@@ -15,31 +15,31 @@ public class Roomba implements Directions {
 		
 		
 
-		int numBeeper = 0;
-		int numPile = 0;
+		int totalBeeper = 0;
+		int totalPile = 0;
 		int area = 1;
-		int numBeepersInPile = 0;
-		int numLargestPile = 0;
-		int x=0;
-		int y=0;
+		int BeepersInPile = 0;
+		int LargestPile = 0;
+		int a = 0;
+		int b = 0;
 		
 		for (int i = 1; i <= 100;) {
 			while (rob.frontIsClear()) {
 				if (rob.nextToABeeper()) {
-					numPile++;
+					totalPile++;
 				}
 				while (rob.nextToABeeper()) {
 					rob.pickBeeper();
-					numBeeper++;
-					numBeepersInPile++;
+					totalBeeper++;
+					BeepersInPile++;
 				}
-				if (numBeepersInPile > numLargestPile) {
-					numLargestPile = numBeepersInPile;
-					x = rob.avenue();
-					y = rob.street();
+				if (BeepersInPile > LargestPile) {
+					LargestPile = BeepersInPile;
+					a = rob.avenue();
+					b = rob.street();
 				}
 
-				numBeepersInPile = 0;
+				BeepersInPile = 0;
 				rob.move();
 				area++;
 			}
@@ -47,21 +47,21 @@ public class Roomba implements Directions {
 			if (rob.facingEast()) {
 				rob.turnLeft();
 				if (rob.nextToABeeper()) {
-					numPile++;
+					totalPile++;
 				}
 				while (rob.nextToABeeper()) {
 					rob.pickBeeper();
-					numBeeper++;
-					numBeepersInPile++;
+					totalBeeper++;
+					BeepersInPile++;
 				
 				}
 				// have to create a new avenue and street for the x and y coordinates
-				if (numBeepersInPile > numLargestPile) {
-					numLargestPile = numBeepersInPile;
-					x = rob.avenue();
-					y = rob.street();
+				if (BeepersInPile > LargestPile) {
+					LargestPile = BeepersInPile;
+					a = rob.avenue();
+					b = rob.street();
 				}
-				numBeepersInPile = 0;
+				BeepersInPile = 0;
 // have to keep checking the space and adding to the area
 				if (rob.frontIsClear()) {
 					rob.move();
@@ -77,19 +77,19 @@ public class Roomba implements Directions {
 				rob.turnLeft();
 
 				if (rob.nextToABeeper()) {
-					numPile++;
+					totalPile++;
 				}
 				while (rob.nextToABeeper()) {
 					rob.pickBeeper();
-					numBeeper++;
-					numBeepersInPile++;
+					totalBeeper++;
+					BeepersInPile++;
 				}
-				if (numBeepersInPile > numLargestPile) {
-					numLargestPile = numBeepersInPile;
-					x = rob.avenue();
-					y = rob.street();
+				if (BeepersInPile > LargestPile) {
+					LargestPile = BeepersInPile;
+					a = rob.avenue();
+					b = rob.street();
 				}
-				numBeepersInPile = 0;
+				BeepersInPile = 0;
 
 				if (rob.frontIsClear()) {
 					rob.move();
@@ -105,13 +105,13 @@ public class Roomba implements Directions {
 		}
 		// final steps are the print statements
 		System.out.println("The area is " + area);
-		System.out.println("The total number of piles are " + numPile);
-		System.out.println("The total number of beepers are " + numBeeper);
-		System.out.println("The largest pile is " + numLargestPile);
-		System.out.println("The dirty percentage is " + ((double)numPile/area));
-		System.out.println("The coordinates are: The x coordinate is "  + x + " and the y coordinate is " + y);
-		System.out.println("The average amount of beepers are " + ((double)numBeeper/numPile));
-		System.out.println("The robot cleaned up a total of " + numBeeper + " beepers.");
+		System.out.println("The total number of piles are " + totalPile);
+		System.out.println("The total number of beepers are " + totalBeeper);
+		System.out.println("The largest pile is " + LargestPile);
+		System.out.println("The dirty percentage is " + ((double)totalPile/area));
+		System.out.println("The coordinates are: The x coordinate is "  + a + " and the y coordinate is " + b);
+		System.out.println("The average amount of beepers are " + ((double)totalBeeper/totalPile));
+		System.out.println("The robot cleaned up a total of " + totalBeeper + " beepers.");
 
 		
 		 // Need to move this somewhere else.
