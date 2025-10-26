@@ -1,4 +1,6 @@
 package piglatin;
+import java.util.Scanner;
+
 
 public class PigLatinTranslator {
     public static Book translate(Book input) {
@@ -17,6 +19,24 @@ public class PigLatinTranslator {
 
         String result = "";
 
+
+        if (input.isEmpty() || input.isBlank()) {
+            return "";
+        }
+
+        Scanner scanner = new Scanner(input);
+        while (scanner.hasNext()) {
+            String word = scanner.next();
+            String translatedWord = translateWord(word);
+
+            if(!result.isEmpty()) {
+                result += " ";
+            }
+            result += translatedWord;
+        }
+
+        scanner.close();
+        
         // TODO: translate a string input, store in result.
         // The input to this function could be any English string.
         // It may be made up of many words.
@@ -27,20 +47,22 @@ public class PigLatinTranslator {
     }
 
     private static String translateWord(String input) {
-        System.out.println("  -> translateWord('" + input + "')");
-
-        String result = "";
+        System.out.println("  -> translateWord('" + input + "')"); 
 
         // TODO: Replace this code to correctly translate a single word.
         // Start here first!
         // This is the first place to work.
-        result = input; // delete this line
+         // delete this line
 
         return result;
-    }
+    
 
     // Add additonal private methods here.
     // For example, I had one like this:
     // private static String capitalizeFirstLetter(String input)
 
 }
+}
+
+
+
