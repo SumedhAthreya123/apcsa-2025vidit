@@ -1,15 +1,16 @@
 package piglatin;
 import java.util.Scanner;
 
-
 public class PigLatinTranslator {
     public static Book translate(Book input) {
         Book translatedBook = new Book();
 
-        // TODO: Add code here to populate translatedBook with a translation of the
-        // input book.
-        // Curent do-nothing code will return an empty book.
-        // Your code will need to call translate(String input) many times.
+        // Translate each line in the book
+        for (int i = 0; i < input.getLineCount(); i++) {
+            String line = input.getLine(i);
+            String translatedLine = translate(line);
+            translatedBook.appendLine(translatedLine);
+        }
 
         return translatedBook;
     }
@@ -18,12 +19,15 @@ public class PigLatinTranslator {
         System.out.println("  -> translate('" + input + "')");
 
         String result = "";
-
-        // TODO: translate a string input, store in result.
-        // The input to this function could be any English string.
-        // It may be made up of many words.
-        // This method must call translateWord once for each word in the string.
-        result = translateWord(input);
+        
+        // Split the input into words and translate each one
+        String[] words = input.split(" ");
+        for (int i = 0; i < words.length; i++) {
+            if (i > 0) {
+                result += " ";
+            }
+            result += translateWord(words[i]);
+        }
 
         return result;
     }
@@ -31,23 +35,19 @@ public class PigLatinTranslator {
     private static String translateWord(String input) {
         System.out.println("  -> translateWord('" + input + "')"); 
 
-        // TODO: Replace this code to correctly translate a single word.
-        // Start here first!
-        // This is the first place to work.
-         // delete this line
         if (input.length() == 0) {
             return "";
         }
-        // to find any punctuation
+        
+        // Extract any punctuation at the end
         String punctuation = "";
         String cleanWord = input;
 
-        // to remove the puncuation
         while (cleanWord.length() > 0) {
             char lastChar = cleanWord.charAt(cleanWord.length() - 1);
             if (!isLetter(lastChar)) {
                 punctuation = lastChar + punctuation;
-                cleanWord = cleanWord.substring(0, cleanWord.length()-1);
+                cleanWord = cleanWord.substring(0, cleanWord.length() - 1);
             } else {
                 break;
             }
@@ -56,21 +56,32 @@ public class PigLatinTranslator {
         if (cleanWord.length() == 0) {
             return input;
         }
-        // to remember if first letter was capital or not
-        boolean firstWasCap = isUpperCase(cleanWord.charAt(0));
         
-
+        // Remember capitalization pattern
+        boolean firstWasCap = isUpperCase(cleanWord.charAt(0));
         String capsPattern = "";
         for (int i = 0; i < cleanWord.length(); i++) {
+            if (isUpperCase(cleanWord.charAt(i))) {
+                capsPattern += "Y";
+            } else {
+                capsPattern += "N";
+            }
+        }
+        
+        // Convert to lowercase for processing
+        String lowerWord = toLowerCase(cleanWord);
+        
+        // Count leading consonants (stop at vowel or hyphen)
+        int consonantCount = 0;
+        for (int i = 0; i < lowerWord.length(); i++) {
             char c = lowerWord.charAt(i);
-            if (isVowel(c) || c == "-") {
+            if (isVowel(c) || c == '-') {
                 break;
             }
-            consonantCount ++;d
-
+            consonantCount++;
         }
 
-
+        // Create pig latin word
         String pigLatinWord = "";
         if (consonantCount == 0) {
             pigLatinWord = lowerWord + "ay";
@@ -80,6 +91,7 @@ public class PigLatinTranslator {
             pigLatinWord = rest + consonants + "ay";
         }
 
+        // Apply capitalization pattern
         String result = "";
         for (int i = 0; i < pigLatinWord.length(); i++) {
             char c = pigLatinWord.charAt(i);
@@ -89,6 +101,7 @@ public class PigLatinTranslator {
             } else if (i == 0 && !firstWasCap) {
                 result = result + toLowerCase(c);
             } else if (i < pigLatinWord.length() - consonantCount - 2) {
+                // Characters from the original word (after consonants moved)
                 int originalIndex = i + consonantCount;
                 if (originalIndex < capsPattern.length() && capsPattern.charAt(originalIndex) == 'Y' && originalIndex != 0) {
                     result = result + toUpperCase(c);
@@ -96,57 +109,60 @@ public class PigLatinTranslator {
                     result = result + c;
                 }
             } else if (i >= pigLatinWord.length() - consonantCount - 2 && i < pigLatinWord.length() - 2) {
+                // Moved consonants (should be lowercase)
                 int originalIndex = i - (pigLatinWord.length() - consonantCount - 2);
                 if (originalIndex < capsPattern.length() && capsPattern.charAt(originalIndex) == 'Y' && originalIndex != 0) {
                     result = result + toUpperCase(c);
                 } else {
                     result = result + toLowerCase(c);
-
                 }
             } else {
+                // "ay" suffix stays lowercase
                 result = result + c;
             }
-            return result + punctuation;
-            
         }
+        
+        return result + punctuation;
+    }
     
-    
-    // Add additonal private methods here.
-    // For example, I had one like this:
-    // private static String capitalizeFirstLetter(String input)
-        private static boolean isVowel(char c) {
-            c = toLowerCase(c);
-            return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
-        }
+    // Helper methods
+    private static boolean isVowel(char c) {
+        c = toLowerCase(c);
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
 
-        private static boolean isLetter(char c) {
-            c = toLowerCase(c);
-            return (c >= 'a' && c <= 'z');
+    private static boolean isLetter(char c) {
+        c = toLowerCase(c);
+        return (c >= 'a' && c <= 'z');
+    }
+    
+    private static boolean isUpperCase(char c) {
+        return (c >= 'A' && c <= 'Z');
+    }
+    
+    private static char toLowerCase(char c) {
+        if (c >= 'A' && c <= 'Z') {
+            return (char)(c + 32);
         }
-        private static boolean isUpperCase(char c) {
-            return (c >= 'A' && c <= 'Z');
+        return c;
+    }
+    
+    private static String toLowerCase(String s) {
+        String result = "";
+        for (int i = 0; i < s.length(); i++) {
+            result += toLowerCase(s.charAt(i));
         }
-        private static char toLowerCase() {
-            if (c >= 'A' && c <= 'Z') {
-                return (char)(c + 32);
-            }   
-        }
-        private static String toLowerCase(String s) {
-            String result = "";
-            for (int i = 0; i < s.length(); i++) {
-                result += toLowerCase(s.charAt(i));
-            }
         return result;
+    }
+    
+    private static char toUpperCase(char c) {
+        if (c >= 'a' && c <= 'z') {
+            return (char)(c - 32);
         }
-        private static char toUpperCase(char c) {
-            if (c >= 'a' && c <= 'z') {
-                return (char)(c - 32);
-            }
-            return c;
-        }
+        return c;
+    }
+}
 
-}
-}
 
 
 
