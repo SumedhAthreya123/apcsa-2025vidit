@@ -140,18 +140,35 @@ public class Game {
     private int score(Hand hand)
     {
         int score = 0;
-        for (int i=0; i<hand.length(); i++)
+        int aceCount = 0;
+        for (int i = 0; i < hand.length(); i = i + 1)
+    {
+        Card card = hand.get(i);
+        int value = card.getValue();
+        
+        if (value == 0) 
         {
-            Card card = hand.get(i);
-            int value = card.getValue() + 1;
-            if (value > 10)
-            {
-                value = 10;
-            }
-            // TODO: deal with aces
-            score += value;
+            aceCount = aceCount + 1;
+            score = score + 11; 
         }
-        return score;
+        else if (value >= 10) 
+        {
+            score = score + 10;
+        }
+        else 
+        {
+            score = score + value + 1;
+        }
+    }
+    
+   
+    while (score > 21 && aceCount > 0)
+    {
+        score = score - 10; 
+        aceCount = aceCount - 1;
+    }
+    
+    return score;
     }
 
 }
