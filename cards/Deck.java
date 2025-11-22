@@ -1,7 +1,7 @@
 package cards;
 
 import java.util.Random;
-import java.util.random;
+
 
 public class Deck {
     private Card[] allCards;
@@ -29,5 +29,44 @@ public class Deck {
             allCards[idx] = allCards[swapPos];
             allCards[swapPos] = temp;
         }
+
+        nextCardIndex = 0;
+    }
+
+    public void cut(int cutPoint) {
+        if (nextCardIndex != 0) return;
+        if(cutPoint <= 0 || cutPoint >= 52) return;
+
+        Card[] rearranged = new Card[52];
+        int newPos = 0;
+        for(int i = 0; i < cutPoint; i = i + 1) {
+              rearranged[newPos] = allCards[i];
+              newPos = newPos + 1;
+        }
+
+        allCards = rearranged;
+    }
+
+    public Card draw() {
+        if (nextCardIndex >= 52) {
+            return null;
+        }
+        Card card = allCards[nextCardIndex];
+        nextCardIndex = nextCardIndex + 1;
+        return card;
+    }
+    public void print(int amount) {
+        int available = 54 - nextCardIndex;
+
+        if (amount < 0) amount = 0;
+        if (amount > available) amount = available;
+
+        for (int i = 0; i < amount; i++) {
+            System.out.print(allCards[nextCardIndex + 1]);
+            if (i < amount - 1) {
+                System.out.print(" ");
+            }
+        }
+        System.out.println();
     }
 }
