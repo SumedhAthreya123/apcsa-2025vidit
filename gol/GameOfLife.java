@@ -9,7 +9,7 @@ public class GameOfLife implements Board {
 
     public GameOfLife(int x, int y)
     {
-        // Construct a 2d array of the given x and y size.
+        board = new int [x][y];
     }
 
     // Set values on the board
@@ -23,7 +23,9 @@ public class GameOfLife implements Board {
 
     // Run the simulation for a number of turns
     public void run(int turns) {
-        // call step the number of times requested
+        for(int i = 0; i < turns; i++) {
+            step();
+        }
     }
 
     // Step the simulation forward one turn.
