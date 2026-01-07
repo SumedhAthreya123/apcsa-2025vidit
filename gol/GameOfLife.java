@@ -4,15 +4,16 @@ import java.util.Arrays;
 
 public class GameOfLife implements Board {
 
-    // Integers: 0 or 1 for alive or dead
+  
     private int[][] board;
 
     public GameOfLife(int x, int y)
     {
-        board = new int [x][y];
+        
+        board = new int[x][y];
     }
 
-    // Set values on the board
+  
     public void set(int x, int y, int[][] data) {
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
@@ -21,68 +22,77 @@ public class GameOfLife implements Board {
         }
     }
 
-    // Run the simulation for a number of turns
+   
     public void run(int turns) {
-        for(int i = 0; i < turns; i++) {
+       
+        for (int i = 0; i < turns; i++) {
             step();
         }
     }
 
-    // Step the simulation forward one turn.
+   
     public void step()
     {
         print();
+       
         int[][] newBoard = new int[board.length][board[0].length];
-
-        for(int x = 0; x < board.length; x++) {
-            for(int y = 0; y < board[0].length; y++) {
+        
+        
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[0].length; y++) {
                 int neighbors = countNeighbors(x, y);
                 int currentState = board[x][y];
+                
+                
+                
+                if (currentState == 1) {
+                    
+                    if (neighbors == 2 || neighbors == 3) {
+                        newBoard[x][y] = 1; 
+                    } else {
+                        newBoard[x][y] = 0; 
+                    }
+                } else {
+                    
+                    if (neighbors == 3) {
+                        newBoard[x][y] = 1; 
+                    } else {
+                        newBoard[x][y] = 0; 
+                    }
+                }
             }
         }
-
-        if(current == 1) {
-            if (neighbors == 2 || neighbors == 3) {
-                newBoard[x][y] = 1;
-            } else {
-                newBoard[x][y] = 0;
-            }
-
-        } else {
-            if (neighbors == 3) {
-                newBoard[x][y] = 1;
-            } else {
-                newBoard[x][y] = 0;
-            }
-        }
+        
+        
         board = newBoard;
     }
 
 
     public int countNeighbors(int x, int y) {
         int count = 0;
+        
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
-                
+               
                 if (dx == 0 && dy == 0) {
                     continue;
                 }
+                
                 count += get(x + dx, y + dy);
             }
         }
+        
         return count;
     }
 
-    // Get a value from the board with "wrap around"
-    // Locations outside the board will loop back into the board.
-    // Ex: -1 will read board.length-1
+    
     public int get(int x, int y) {
         int xLimit = board.length;
         int yLimit= board[0].length;
         return board[(x+xLimit)%xLimit][(y+yLimit)%yLimit];
     }
 
-    // Test helper to get the whole board state
+    
     public int[][] get()
     {
         return board;
