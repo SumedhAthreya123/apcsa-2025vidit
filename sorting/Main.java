@@ -1,5 +1,7 @@
 package sorting;
 
+import java.util.Random;
+
 public class Main {
     public static void main(String[] args)
     {
@@ -22,7 +24,8 @@ public class Main {
 
     public static int[] randomArray(int length)
     {
-        // TODO: make this return an actual random array of the provided length.
+        Random random = new Random();
+        int[] a =
         int[] a = {10, 5, 3, 2};
         return a;
     }
