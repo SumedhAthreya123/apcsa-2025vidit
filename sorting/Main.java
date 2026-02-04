@@ -25,8 +25,10 @@ public class Main {
     public static int[] randomArray(int length)
     {
         Random random = new Random();
-        int[] a =
-        int[] a = {10, 5, 3, 2};
+        int[] a = new int [length];
+        for (int i = 0; i < length; i++) {
+            a[i] = random.nextInt(10000);
+        }
         return a;
     }
 
