@@ -53,10 +53,25 @@ public class IrregularPolygon {
     {
         // Wrap the DrawingTool in a try/catch to allow development without need for graphics.
         try {
+            DrawingTool pen = new DrawingTool(new SketchPad(500, 500));
+            int n = myPolygon.size();
+
+            Point2D.Double first = myPolygon.get(0);
+            pen.up();
+            pen.move(first.x, first.y);
+            pen.down();
+
+
+            for (int i = 1; i < n; i++) {
+                Point2D.Double point = myPolygon.get(i);
+                pen.move(point.x, point.y);
+            }
+
+            pen.move(first.x, first.y);    
             // TODO: Draw the polygon.
             // Documents: https://pavao.org/compsci/gpdraw/html/gpdraw/DrawingTool.html
-            //DrawingTool myDrawingTool = new DrawingTool(new SketchPad(500, 500));
-            //myDrawingTool.move(50, 50);
+            DrawingTool myDrawingTool = new DrawingTool(new SketchPad(500, 500));
+            myDrawingTool.move(50, 50);
         } catch (java.awt.HeadlessException e) {
             System.out.println("Exception: No graphics support available.");
         }
