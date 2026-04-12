@@ -1,9 +1,9 @@
 {
   "java.project.sourcePaths": [
-    ""
+    "."
   ],
   "java.project.referencedLibraries": [
-    "irregularPolygon/gpdraw.jar",
-    "robot/KarelJRobot.jar"
+    "polygon/gpdraw.jar",
+    "/workspaces/apcsa-2025vidit/robot/KarelJRobot.jar"
   ]
 }
